@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Email Verification Demo</string>
+    <string name="offline_mode">Offline demo</string>
+    <string name="offline_help">No email is sent. Use the demo code %1$s.</string>
+    <string name="live_mode">Live test host</string>
+    <string name="configure_live">Connect to test host</string>
+    <string name="use_offline">Switch to offline demo</string>
+    <string name="live_title">Connect to the test host</string>
+    <string name="live_help">Use the HTTPS URL of your deployment and a Cognito access token for its tester account. Only the configured test recipient can receive email.</string>
+    <string name="live_origin">Test-host URL</string>
+    <string name="live_token">Cognito access token</string>
+    <string name="live_invalid">Enter an HTTPS origin and a valid token format.</string>
+    <string name="live_continue">Continue</string>
+    <string name="live_cancel">Back to offline demo</string>
+</resources>

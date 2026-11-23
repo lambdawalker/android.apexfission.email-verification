@@ -1,0 +1,16 @@
+{
+  "email-verification": {
+    "emailEntry": 3,
+    "sending": 2,
+    "codeEntry": 2,
+    "codeError": 3,
+    "waiting": 2,
+    "success": 2,
+    "expired": 2
+  },
+  "app": {
+    "offlineFlow": 2,
+    "liveSettings": 3,
+    "liveFlow": 2
+  }
+}

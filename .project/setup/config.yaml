@@ -1,0 +1,27 @@
+repository: lambdawalker/android.apexfission.email-verification
+title: ApexFission Email Verification
+modules:
+  email-verification: Email verification
+tooling_ref: v0.1.28
+android_modules:
+  app:
+    path: :app
+    directory: app
+    kind: application
+    selected: true
+    namespace: com.apexfission.android.emailverification.demo
+    application_ids:
+    - com.apexfission.android.emailverification.demo
+    screenshots: true
+  email-verification:
+    path: :email-verification
+    directory: email-verification
+    kind: library
+    selected: true
+    namespace: com.apexfission.android.emailverification
+    application_ids: []
+    screenshots: true
+module_verification:
+  email-verification:
+    class_prefix: com/apexfission/android/emailverification/
+    required_api_artifacts: []

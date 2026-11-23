@@ -1,0 +1,15 @@
+schema: 1
+repository: lambdawalker/android.apexfission.email-verification
+title: ApexFission Email Verification
+modules:
+  email-verification: Email verification
+tooling_ref: v0.1.28
+site:
+  backend: astro
+  base_url: https://lambdawalker.github.io/android.apexfission.email-verification/
+  pages:
+    docs/agents/index.md: ''
+    docs/agents/android.md: android
+    docs/agents/demo.md: demo
+    docs/agents/go.md: go
+    docs/agents/screenshots.md: screenshots
