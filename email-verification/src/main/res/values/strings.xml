@@ -1,0 +1,31 @@
+<resources>
+    <string name="ev_enter_email">Verify your email</string>
+    <string name="ev_enter_email_help">We’ll send a six-digit code to your inbox.</string>
+    <string name="ev_email_address">Email address</string>
+    <string name="ev_send_code">Send code</string>
+    <string name="ev_sending">Sending the code…</string>
+    <string name="ev_check_email">Check your email</string>
+    <string name="ev_check_email_help">Enter the code from your verification email.</string>
+    <string name="ev_confirmation_code">Confirmation code</string>
+    <string name="ev_six_digit_code">Six-digit confirmation code</string>
+    <string name="ev_paste">Paste code</string>
+    <string name="ev_verify">Verify email</string>
+    <string name="ev_checking">Checking verification…</string>
+    <string name="ev_check_status">Check status</string>
+    <string name="ev_change_email">Change email address</string>
+    <string name="ev_waiting">Code accepted</string>
+    <string name="ev_waiting_help">The host is finishing verification. This can take a minute.</string>
+    <string name="ev_checking_status">Checking host status…</string>
+    <string name="ev_verified">Email verified</string>
+    <string name="ev_stopped">Verification ended</string>
+    <string name="ev_start_over">Start over</string>
+    <string name="ev_email_required">Enter your email address.</string>
+    <string name="ev_invalid_email">This email address couldn’t be verified. Check the address and try again.</string>
+    <string name="ev_invalid_code">That code didn’t work. Check the latest verification email.</string>
+    <string name="ev_unauthorized">Your session is no longer authorized. Sign in again and retry.</string>
+    <string name="ev_expired">The code expired. Start over for a new code.</string>
+    <string name="ev_attempts_exhausted">Too many incorrect attempts. Start over for a new code.</string>
+    <string name="ev_delivery_failed">The verification email couldn’t be delivered.</string>
+    <string name="ev_unresolved">The host hasn’t completed verification.</string>
+    <string name="ev_unavailable">Verification is temporarily unavailable. Try again.</string>
+</resources>

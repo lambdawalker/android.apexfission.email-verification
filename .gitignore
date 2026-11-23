@@ -1,0 +1,9 @@
+.gradle/
+.idea/
+.kotlin/
+**/build/
+local.properties
+*.iml
+sites/dist/
+/.project/docs/cache/
+/.project/setup/cache/
