@@ -33,6 +33,8 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.preview)
     debugImplementation(libs.compose.tooling)
+    testImplementation(libs.junit)
+    testImplementation("org.json:json:20240303")
     screenshotTestImplementation(libs.compose.tooling)
     screenshotTestImplementation(libs.screenshot.api)
 }

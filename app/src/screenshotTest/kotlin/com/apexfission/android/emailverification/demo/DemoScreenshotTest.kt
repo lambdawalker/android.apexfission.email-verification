@@ -12,7 +12,7 @@ import com.apexfission.android.emailverification.VerificationStep
 @Preview(name = "Dark", widthDp = 393, heightDp = 800, locale = "en-rUS", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private annotation class VerificationThemes
 
-private enum class Screen { Offline, Settings, Live }
+private enum class Screen { Offline, Settings, Directory, Live }
 
 class DemoScreenshotTest {
     @PreviewTest
@@ -29,6 +29,11 @@ class DemoScreenshotTest {
     @PreviewTest
     @VerificationThemes
     @Composable
+    fun directorySettings() = DemoFixture(Screen.Directory)
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
     fun liveFlow() = DemoFixture(Screen.Live)
 }
 
@@ -38,6 +43,17 @@ private fun DemoFixture(screen: Screen) {
         DemoFrame {
             when (screen) {
                 Screen.Settings -> LiveConnectionForm({ _, _ -> false }, {})
+                Screen.Directory -> LiveConnectionForm(
+                    onConnect = { _, _ -> false },
+                    onCancel = {},
+                    directory = DemoDirectory(entries = listOf(
+                        DemoEnvironment("dev", DEFAULT_ORIGIN, "us-east-2_demo", "demo-client"),
+                        DemoEnvironment(
+                            "qa", "https://qa.components.email-verification.apexfission.com",
+                            "us-east-2_qa", "qa-client",
+                        ),
+                    )),
+                )
                 Screen.Offline, Screen.Live -> {
                     val live = screen == Screen.Live
                     DemoMode(if (live) DEFAULT_ORIGIN else null, {})
