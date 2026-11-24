@@ -16,6 +16,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -44,6 +47,10 @@ import com.apexfission.android.emailverification.VerificationFailure
 import com.apexfission.android.emailverification.VerificationGateway
 import com.apexfission.android.emailverification.VerificationRequestException
 import com.apexfission.android.emailverification.VerificationResult
+import java.io.IOException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import org.json.JSONException
 
 internal const val DEFAULT_ORIGIN = "https://dev.components.email-verification.apexfission.com"
 internal const val DEMO_CODE = "271828"
@@ -59,13 +66,15 @@ class MainActivity : ComponentActivity() {
                     if (model.configuring) {
                         LiveConnectionForm(
                             onConnect = model::connect,
-                            onCancel = { model.configuring = false },
+                            onCancel = model::cancelConnection,
+                            directory = model.directory,
+                            onRefreshDirectory = model::refreshDirectory,
                         )
                     } else {
                         DemoMode(
                             live = model.origin,
                             onSwitch = {
-                                if (model.origin == null) model.configuring = true else model.useOffline()
+                                if (model.origin == null) model.openConnection() else model.useOffline()
                             },
                         )
                         EmailVerificationWidget(controller)
@@ -80,8 +89,36 @@ internal class DemoModel : ViewModel() {
     var controller by mutableStateOf(offline())
         private set
     var configuring by mutableStateOf(false)
+        private set
+    var directory by mutableStateOf(DemoDirectory())
+        private set
+    private var directoryRequest: Job? = null
     var origin by mutableStateOf<String?>(null)
         private set
+
+    fun openConnection() {
+        configuring = true
+        refreshDirectory()
+    }
+
+    fun cancelConnection() {
+        directoryRequest?.cancel()
+        configuring = false
+    }
+
+    fun refreshDirectory() {
+        directoryRequest?.cancel()
+        directory = DemoDirectory(loading = true)
+        directoryRequest = viewModelScope.launch {
+            directory = try {
+                DemoDirectory(entries = loadDemoDirectory())
+            } catch (_: IOException) {
+                DemoDirectory(unavailable = true)
+            } catch (_: JSONException) {
+                DemoDirectory(unavailable = true)
+            }
+        }
+    }
 
     fun connect(origin: String, token: String): Boolean {
         if (token.isBlank() || token.any { it.isWhitespace() || it.isISOControl() }) return false
@@ -93,7 +130,7 @@ internal class DemoModel : ViewModel() {
         controller.reset()
         controller = EmailVerificationController(gateway, viewModelScope)
         this.origin = origin
-        configuring = false
+        cancelConnection()
         return true
     }
 
@@ -137,16 +174,57 @@ internal fun DemoMode(live: String?, onSwitch: () -> Unit) {
 }
 
 @Composable
-internal fun LiveConnectionForm(onConnect: (String, String) -> Boolean, onCancel: () -> Unit) {
+internal fun LiveConnectionForm(
+    onConnect: (String, String) -> Boolean,
+    onCancel: () -> Unit,
+    directory: DemoDirectory = DemoDirectory(),
+    onRefreshDirectory: () -> Unit = {},
+) {
     var endpoint by remember { mutableStateOf(DEFAULT_ORIGIN) }
     var token by remember { mutableStateOf("") }
     var invalid by remember { mutableStateOf(false) }
+    var selected by remember { mutableStateOf<DemoEnvironment?>(null) }
+    var expanded by remember { mutableStateOf(false) }
     Text(stringResource(R.string.live_title), style = MaterialTheme.typography.headlineSmall)
     Text(stringResource(R.string.live_help))
+    when {
+        directory.loading -> Text(stringResource(R.string.directory_loading))
+        directory.unavailable -> Text(stringResource(R.string.directory_unavailable))
+        directory.entries.isEmpty() -> Text(stringResource(R.string.directory_empty))
+        else -> Column {
+            OutlinedButton(onClick = { expanded = true }, shape = MaterialTheme.shapes.small) {
+                Text(selected?.id ?: stringResource(R.string.directory_choose))
+            }
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                directory.entries.forEach { entry ->
+                    DropdownMenuItem(
+                        text = { Text(entry.id) },
+                        onClick = {
+                            selected = entry
+                            endpoint = entry.origin
+                            token = ""
+                            invalid = false
+                            expanded = false
+                        },
+                    )
+                }
+            }
+        }
+    }
+    selected?.let { entry ->
+        Text(stringResource(R.string.directory_cognito, entry.poolId, entry.clientId))
+    }
+    if (!directory.loading) {
+        TextButton(onClick = onRefreshDirectory, shape = MaterialTheme.shapes.small) {
+            Text(stringResource(R.string.directory_refresh))
+        }
+    }
     OutlinedTextField(
         value = endpoint,
         onValueChange = {
             endpoint = it
+            selected = null
+            token = ""
             invalid = false
         },
         label = { Text(stringResource(R.string.live_origin)) },

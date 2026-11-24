@@ -11,6 +11,7 @@
   "app": {
     "offlineFlow": 2,
     "liveSettings": 3,
+    "directorySettings": 2,
     "liveFlow": 2
   }
 }

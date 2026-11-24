@@ -12,4 +12,10 @@
     <string name="live_invalid">Enter an HTTPS origin and a valid token format.</string>
     <string name="live_continue">Continue</string>
     <string name="live_cancel">Back to offline demo</string>
+    <string name="directory_loading">Loading demo environments…</string>
+    <string name="directory_unavailable">Environment discovery is unavailable. You can enter the test-host URL manually.</string>
+    <string name="directory_empty">No published environments. You can enter the test-host URL manually.</string>
+    <string name="directory_choose">Choose an environment</string>
+    <string name="directory_cognito">Cognito pool %1$s · app client %2$s</string>
+    <string name="directory_refresh">Refresh environments</string>
 </resources>

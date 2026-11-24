@@ -32,7 +32,7 @@ jobs:
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v5
       - name: Build, lint and test
-        run: ./gradlew :email-verification:testDebugUnitTest :email-verification:lintDebug :app:lintDebug :app:assembleDebug
+        run: ./gradlew :email-verification:testDebugUnitTest :app:testDebugUnitTest :email-verification:lintDebug :app:lintDebug :app:assembleDebug
       - name: Render screenshot candidates
         shell: bash
         run: python3 scripts/screenshots/review.py | tee -a "$GITHUB_STEP_SUMMARY"
