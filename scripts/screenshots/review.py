@@ -10,6 +10,7 @@ import shutil
 import struct
 import subprocess
 import tempfile
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs/screenshots"
@@ -22,7 +23,13 @@ INPUTS = [
     "email-verification/src/main", "email-verification/src/screenshotTest",
     "email-verification/build.gradle.kts", "gradle", "gradle.properties",
     "settings.gradle.kts", "docs/screenshots/scenarios.json",
+    ".github/workflows/verify.yml",
 ]
+
+def ui_common_dependency():
+    with (ROOT / "gradle/libs.versions.toml").open("rb") as catalog:
+        dependency = tomllib.load(catalog)["libraries"]["ui-common"]
+    return {"repository": "https://jitpack.io", **dependency}
 
 
 def capture_input():
@@ -139,6 +146,7 @@ def capture():
         raise ValueError("Render inputs changed during capture.")
     images = inventory(candidates)
     current = {
+        "ui_common_dependency": ui_common_dependency(),
         "source": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "input_sha256": inputs,
         "dirty": bool(subprocess.check_output(["git", "status", "--short", "--", *INPUTS], cwd=ROOT)),

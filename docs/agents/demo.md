@@ -2,6 +2,9 @@
 
 ## Launcher and App settings
 
+The demo resolves the published [UI Common 0.1.1 dependency](android.md#ui-common-dependency)
+through the repository's version catalog.
+
 Build with `./gradlew :app:assembleDebug`, install with `./gradlew :app:installDebug`, then open **Email Verification Demo**. The explicit launch command is `adb shell am start -n com.apexfission.android.emailverification.demo/.MainActivity`. The app requires API 28+ and the repository's Android toolchain. Its `:app` module consumes `project(":email-verification")`; the demo is not a published library artifact.
 
 The launcher uses UI Common's `CatalogScreen`, `ContentCard` and `SectionHeading`, with **App settings** above the Offline and Live entries. It opens `Settings.ACTION_APPLICATION_DETAILS_SETTINGS` with the installed package's `package:` URI, so it also works when an application-ID suffix is used. System Back returns to the catalog. This component needs no runtime permissions; there is no permission cache or permission request to refresh. Launching the catalog and using the offline example make no network requests.
@@ -23,6 +26,15 @@ The host owns navigation, environment discovery and in-memory demo sessions. Ret
 These reviewed Compose-rendered previews show the production catalog at 393 × 800 dp. [Capture provenance](../screenshots/demo-catalog.json) records the source commit and PNG hashes. They document the layout; the device tests separately verify navigation and the Android Settings round trip. Regression baseline acceptance remains part of the [screenshot review workflow](screenshots.md).
 
 ## Offline
+
+| Manual code, light | Manual code, dark |
+| --- | --- |
+| ![Light manual code screen with the shared recipient card](../screenshots/manual-code-light.png) | ![Dark manual code screen with the shared recipient card](../screenshots/manual-code-dark.png) |
+
+These synthetic previews show a complete local example code before submission. The recipient stays
+**Awaiting confirmation** until the controller advances. The blue/slate palette belongs to the demo;
+the reusable widget inherits its host theme. **Paste code** and **Change destination** sit below
+the recipient card. Tapping a digit selects it, and the highlight follows typing. [Capture provenance](../screenshots/manual-code.json).
 
 Choose **Open offline demo**, leave the sample address in place, tap **Send code**, then enter `271828`. Enter a different six-digit code first to see the error and retry state. Offline mode uses an in-memory fixture and sends no email. **Start over** starts another attempt; **Back to demo menu** and system Back leave the flow.
 

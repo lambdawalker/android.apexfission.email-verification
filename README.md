@@ -2,6 +2,15 @@
 
 A reusable Android Compose email-verification widget and a standalone app for development and demos. Its launcher catalog offers an offline flow and a separate connection to an isolated Go email-verification test host. **App settings** at the top opens Android's settings for this installed demo.
 
+The shared components use the published **UI Common 0.1.1** JitPack artifact. Normal builds and CI
+resolve the same [pinned dependency](docs/agents/android.md#ui-common-dependency).
+
+| Manual code, light | Manual code, dark |
+| --- | --- |
+| ![Manual email verification in light mode](docs/screenshots/manual-code-light.png) | ![Manual email verification in dark mode](docs/screenshots/manual-code-dark.png) |
+
+Synthetic Compose previews from the runnable demo; [capture provenance](docs/screenshots/manual-code.json).
+
 | Component | Use |
 | --- | --- |
 | `:email-verification` | Embed the email and six-digit code flow in a Material 3 host. Connect the Go test host or provide a custom `VerificationGateway`. |

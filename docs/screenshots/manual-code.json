@@ -1,0 +1,30 @@
+{
+  "source": "5515c2453e61d92a23d4e0f6015bb93be1496584",
+  "input_sha256": "109b0116b4e6b564b4e7e5f94ce98f117642afb4af14245dc3268a4493a542ca",
+  "dirty": false,
+  "ui_common_source": {
+    "repository": "lambdawalker/android.ui.common",
+    "source": "66e66710e9e3337615a39ecbfb6269c30ebe5377",
+    "input_sha256": "609a69b990d267c9f90613128424502614bacf216b4bae360eaf6a2e6136e69e",
+    "dirty": false
+  },
+  "workflow_run": "https://github.com/lambdawalker/android.apexfission.email-verification/actions/runs/45695118775",
+  "capture": "Compose Preview Screenshot renderer; 393 x 800 dp, en-US, font scale 1.0",
+  "review": "Light/dark documentation previews visually reviewed for restored text actions below the recipient, compact spacing and primary action visibility. Regression baselines remain unaccepted.",
+  "images": {
+    "manual-code-light.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/manualCodeReady_Light_b135cb1d_0.png",
+      "theme": "light",
+      "sha256": "c8b9d9c6abc73ca2b8c303a1244be0e8474453839a8a0c24a95824c4b440e3be",
+      "width": 1032,
+      "height": 2100
+    },
+    "manual-code-dark.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/manualCodeReady_Dark_54f6fcf2_0.png",
+      "theme": "dark",
+      "sha256": "051bbf13859c6aa0871296ce3924b64f6dbd7bf6fd12d7a33888b276da0bba56",
+      "width": 1032,
+      "height": 2100
+    }
+  }
+}
