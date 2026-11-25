@@ -2,11 +2,12 @@
   "email-verification": {
     "emailEntry": 3,
     "sending": 2,
-    "codeEntry": 2,
+    "codeEntry": 4,
     "codeError": 3,
     "waiting": 2,
     "success": 2,
-    "expired": 2
+    "expired": 2,
+    "codeBusy": 2
   },
   "app": {
     "catalog": 4,
@@ -17,6 +18,8 @@
     "directorySettings": 2,
     "directoryUnavailable": 2,
     "directoryLoading": 2,
-    "liveFlow": 2
+    "liveFlow": 2,
+    "manualCode": 4,
+    "manualCodeReady": 2
   }
 }

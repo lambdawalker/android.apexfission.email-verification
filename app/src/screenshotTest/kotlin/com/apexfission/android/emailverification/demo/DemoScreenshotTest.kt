@@ -17,6 +17,18 @@ class DemoScreenshotTest {
     @PreviewTest
     @VerificationThemes
     @Preview(name = "Narrow and large text", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB")
+    @Preview(name = "Narrow and large text dark", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB", uiMode = Configuration.UI_MODE_NIGHT_YES)
+    @Composable
+    fun manualCode() = FlowFixture(VerificationStep.Code)
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun manualCodeReady() = FlowFixture(VerificationStep.Code, code = DEMO_CODE)
+
+    @PreviewTest
+    @VerificationThemes
+    @Preview(name = "Narrow and large text", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB")
     @Preview(name = "Spanish", widthDp = 393, heightDp = 800, locale = "es-rMX")
     @Composable
     fun catalog() = DemoTheme { DemoCatalogScreen({}, {}, {}) }
@@ -74,11 +86,11 @@ private fun ConnectionFixture(directory: DemoDirectory) {
 }
 
 @Composable
-private fun FlowFixture(step: VerificationStep, live: String? = null, message: VerificationMessage? = null) {
+private fun FlowFixture(step: VerificationStep, live: String? = null, message: VerificationMessage? = null, code: String = "") {
     DemoTheme {
         DemoFlowScreen(live, {}) {
             EmailVerificationWidget(
-                EmailVerificationState(step, "tester@example.invalid", message = message),
+                EmailVerificationState(step, "tester@example.invalid", code = code, message = message),
                 {}, {}, {}, {}, {}, {},
             )
         }

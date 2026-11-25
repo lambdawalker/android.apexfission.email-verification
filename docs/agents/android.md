@@ -8,6 +8,31 @@ The library targets API 28+ and uses Java 17 bytecode and Material 3. The refere
 
 Inside a Material 3 screen use `EmailVerificationWidget(controller, modifier)`. Give it a scrollable parent when it has limited space. It uses the host's color scheme, typography and shapes. The same widget has a controlled overload that accepts `EmailVerificationState` and actions for projects with their own state machine.
 
+The manual-code screen uses UI Common's detailed verification card: six rounded cells, a label
+and length legend, explanatory copy, and a recipient/status summary. Its primary action remains
+disabled until six digits are entered and requires an explicit tap. The card says **Awaiting
+confirmation** until the controller advances; entering a code does not imply that a link opened.
+Check status and Change email address retain their existing callbacks. Resend, host onboarding
+progress, product branding and session-isolation claims are not inferred by this component.
+The demo owns the reference-inspired blue/slate palette. The library always inherits its host.
+
+## Pending UI Common release
+
+This Development change needs the new `VerificationCardDetails` API, which is not present in
+the confirmed UI Common 0.1.0 JitPack artifact. The dependency pin remains unchanged until the
+owner publishes a release. Contributor and CI validation can explicitly substitute a reviewed
+source checkout; Gradle never clones a repository or falls back to an untracked local artifact:
+
+```sh
+./gradlew :app:assembleDebug :app:connectedDebugAndroidTest -PuiCommonSourceDir=/absolute/path/to/android.ui.common
+```
+
+CI checks out the full immutable source revision recorded in its workflow. Keep this consumer
+PR draft until a confirmed JitPack release replaces the old pin and validation passes without
+the source override.
+
+## Controller ownership
+
 Create one `EmailVerificationController` per flow with the screen ViewModel's `viewModelScope`. Start with an injected `VerificationGateway` or with `TestHostGateway(origin) { signedInAccessToken() }`. Hosts that provide an HTTP gateway should add the manifest `INTERNET` permission. The widget itself needs no runtime permissions.
 
 ```kotlin

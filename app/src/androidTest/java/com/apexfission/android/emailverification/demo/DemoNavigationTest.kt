@@ -7,8 +7,16 @@ import android.provider.Settings
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.assertIsEnabled
+import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
@@ -56,12 +64,12 @@ class DemoNavigationTest {
     @Test fun systemBackDiscardsTheAttemptAndMenuCanStartAgain() {
         compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().performClick()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_check_email)).performScrollTo().assertIsDisplayed()
+        compose.onAllNodesWithText(compose.activity.getString(WidgetR.string.ev_check_email))[0].performScrollTo().assertIsDisplayed()
         pressBack()
         compose.onNodeWithText(compose.activity.getString(R.string.app_settings)).assertIsDisplayed()
         compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText(compose.activity.getString(R.string.back_to_menu)).performScrollTo().performClick()
+        compose.onNodeWithContentDescription(compose.activity.getString(R.string.back_to_menu)).performClick()
         compose.onNodeWithText(compose.activity.getString(R.string.app_settings)).assertIsDisplayed()
     }
 
@@ -69,8 +77,24 @@ class DemoNavigationTest {
         compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().performClick()
         compose.activityRule.scenario.recreate()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_check_email)).performScrollTo().assertIsDisplayed()
+        compose.onAllNodesWithText(compose.activity.getString(WidgetR.string.ev_check_email))[0].performScrollTo().assertIsDisplayed()
         pressBack()
         compose.onNodeWithText(compose.activity.getString(R.string.app_settings)).assertIsDisplayed()
+    }
+
+    @Test fun manualCodeRetainsValidationRecoveryAndExplicitCompletion() {
+        compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().performClick()
+        val confirm = compose.onNode(hasText(compose.activity.getString(WidgetR.string.ev_verify)) and hasClickAction())
+        confirm.performScrollTo().assertIsNotEnabled()
+        val field = compose.onNodeWithContentDescription(compose.activity.getString(WidgetR.string.ev_six_digit_code))
+        field.performScrollTo().performTextInput("000000")
+        confirm.performScrollTo().assertIsEnabled().performClick()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).performScrollTo().assertIsDisplayed()
+        field.performScrollTo().performTextReplacement(DEMO_CODE)
+        // Entering all digits never submits by itself.
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_awaiting_confirmation)).performScrollTo().assertIsDisplayed()
+        confirm.performScrollTo().performClick()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_verified)).performScrollTo().assertIsDisplayed()
     }
 }

@@ -3,19 +3,29 @@ package com.apexfission.android.emailverification
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.liveRegion
@@ -24,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.apexfission.android.ui.common.CodeVerificationCard
+import com.apexfission.android.ui.common.VerificationCardDetails
 
 /** Email-verification flow rendered in the calling application's Material 3 theme. */
 @Composable
@@ -77,32 +88,72 @@ fun EmailVerificationWidget(
                 }
             }
             VerificationStep.Code -> {
-                Text(stringResource(R.string.ev_check_email), style = MaterialTheme.typography.headlineSmall)
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Surface(shape = MaterialTheme.shapes.medium,
+                        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        contentColor = MaterialTheme.colorScheme.primary) {
+                        Icon(painterResource(R.drawable.ev_mail_check), contentDescription = null,
+                            modifier = Modifier.padding(10.dp).size(24.dp))
+                    }
+                    Text(stringResource(R.string.ev_check_email), style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.weight(1f))
+                }
+                Spacer(Modifier.height(12.dp))
                 CodeVerificationCard(
+                    details = VerificationCardDetails(
+                        codeLengthLabel = stringResource(R.string.ev_code_length),
+                        explanation = stringResource(R.string.ev_code_explanation),
+                        recipientStatus = stringResource(R.string.ev_awaiting_confirmation),
+                    ),
                     value = state.code,
                     onValueChange = onCodeChange,
                     codeLabel = stringResource(R.string.ev_confirmation_code),
                     codeContentDescription = stringResource(R.string.ev_six_digit_code),
-                    pasteLabel = stringResource(R.string.ev_paste),
+                    pasteLabel = null,
                     instructions = stringResource(R.string.ev_check_email_help),
                     recipient = state.email,
                     enabled = !state.busy,
                     autofillContentType = ContentType("emailOTPCode"),
                     busyMessage = if (state.busy) stringResource(R.string.ev_checking) else null,
                     errorMessage = message,
+                    recipientLeadingIcon = {
+                        Surface(shape = MaterialTheme.shapes.extraLarge,
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
+                            Icon(painterResource(R.drawable.ev_mail), contentDescription = null,
+                                modifier = Modifier.padding(8.dp).size(20.dp))
+                        }
+                    },
                 )
+                Spacer(Modifier.height(12.dp))
                 Button(
                     onClick = onVerify,
                     enabled = !state.busy && state.code.length == 6,
                     shape = MaterialTheme.shapes.small,
+                    modifier = Modifier.fillMaxWidth().heightIn(min = 48.dp),
                 ) {
-                    Text(stringResource(R.string.ev_verify))
+                    Icon(painterResource(R.drawable.ev_shield_check), contentDescription = null)
+                    Text(stringResource(R.string.ev_verify),
+                        modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        style = MaterialTheme.typography.titleSmall)
+                    Icon(painterResource(R.drawable.ev_arrow_forward), contentDescription = null)
                 }
-                TextButton(onClick = onCheckStatus, enabled = !state.busy, shape = MaterialTheme.shapes.small) {
+                TextButton(onClick = onCheckStatus, enabled = !state.busy, shape = MaterialTheme.shapes.small,
+                    modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.ev_check_status))
                 }
-                TextButton(onClick = onStartOver, enabled = !state.busy, shape = MaterialTheme.shapes.small) {
+                TextButton(onClick = onStartOver, enabled = !state.busy, shape = MaterialTheme.shapes.small,
+                    modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.ev_change_email))
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Icon(painterResource(R.drawable.ev_lock), contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
+                    Text(stringResource(R.string.ev_code_privacy), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             VerificationStep.WaitingForHost -> {

@@ -7,3 +7,4 @@ local.properties
 sites/dist/
 /.project/docs/cache/
 /.project/setup/cache/
+/.integration/
