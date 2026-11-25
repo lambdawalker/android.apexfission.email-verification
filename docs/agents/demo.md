@@ -34,7 +34,8 @@ These reviewed Compose-rendered previews show the production catalog at 393 × 8
 
 These synthetic previews show a complete local example code before submission. The recipient stays
 **Awaiting confirmation** until the controller advances. The blue/slate palette belongs to the demo;
-the reusable widget inherits its host theme. [Capture provenance](../screenshots/manual-code.json).
+the reusable widget inherits its host theme. **Paste code** and **Change destination** sit below
+the recipient card. Tapping a digit selects it, and the highlight follows typing. [Capture provenance](../screenshots/manual-code.json).
 
 Choose **Open offline demo**, leave the sample address in place, tap **Send code**, then enter `271828`. Enter a different six-digit code first to see the error and retry state. Offline mode uses an in-memory fixture and sends no email. **Start over** starts another attempt; **Back to demo menu** and system Back leave the flow.
 
