@@ -111,7 +111,7 @@ internal fun DemoFlowScreen(live: String?, onBack: () -> Unit, content: @Composa
         }
     }) { insets ->
         Column(Modifier.fillMaxSize().padding(insets).imePadding().verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 24.dp), verticalArrangement = Arrangement.spacedBy(24.dp)) {
+            .padding(horizontal = 16.dp, vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text(if (live == null) stringResource(R.string.offline_help, DEMO_CODE)
                 else stringResource(R.string.live_session_help),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

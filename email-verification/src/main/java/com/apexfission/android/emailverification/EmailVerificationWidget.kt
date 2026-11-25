@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -65,7 +66,7 @@ fun EmailVerificationWidget(
     modifier: Modifier = Modifier,
 ) {
     val message = state.message?.let { stringResource(it.textId) }
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(if (state.step == VerificationStep.Code) 8.dp else 12.dp)) {
         when (state.step) {
             VerificationStep.Email -> {
                 Text(stringResource(R.string.ev_enter_email), style = MaterialTheme.typography.headlineSmall)
@@ -92,7 +93,7 @@ fun EmailVerificationWidget(
                     verticalAlignment = Alignment.CenterVertically) {
                     Surface(shape = MaterialTheme.shapes.medium,
                         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        contentColor = MaterialTheme.colorScheme.primary) {
+                        contentColor = MaterialTheme.colorScheme.onSurface) {
                         Icon(painterResource(R.drawable.ev_mail_check), contentDescription = null,
                             modifier = Modifier.padding(10.dp).size(24.dp))
                     }
@@ -141,17 +142,19 @@ fun EmailVerificationWidget(
                     Icon(painterResource(R.drawable.ev_arrow_forward), contentDescription = null)
                 }
                 TextButton(onClick = onCheckStatus, enabled = !state.busy, shape = MaterialTheme.shapes.small,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
                     modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.ev_check_status))
                 }
                 TextButton(onClick = onStartOver, enabled = !state.busy, shape = MaterialTheme.shapes.small,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
                     modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.ev_change_email))
                 }
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically) {
                     Icon(painterResource(R.drawable.ev_lock), contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                     Text(stringResource(R.string.ev_code_privacy), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
