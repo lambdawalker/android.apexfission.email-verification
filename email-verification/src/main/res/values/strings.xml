@@ -7,7 +7,7 @@
     <string name="ev_check_email">Complete email verification</string>
     <string name="ev_check_email_help">Enter the 6-digit code sent to your email to continue.</string>
     <string name="ev_code_length">6 digits</string>
-    <string name="ev_code_explanation">Confirm access to this email address to continue. Your app will complete the next step.</string>
+    <string name="ev_code_explanation">Confirm access to this email address to continue.</string>
     <string name="ev_awaiting_confirmation">Awaiting confirmation</string>
     <string name="ev_code_privacy">Never share your confirmation code.</string>
     <string name="ev_confirmation_code">Confirmation code</string>

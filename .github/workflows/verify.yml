@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: lambdawalker/android.ui.common
-          ref: be4cee38c04a33e334e90987d3900882580587b4
+          ref: 66e66710e9e3337615a39ecbfb6269c30ebe5377
           path: .integration/ui-common
       - uses: actions/setup-java@v5
         with:
@@ -73,7 +73,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: lambdawalker/android.ui.common
-          ref: be4cee38c04a33e334e90987d3900882580587b4
+          ref: 66e66710e9e3337615a39ecbfb6269c30ebe5377
           path: .integration/ui-common
       - uses: actions/setup-java@v5
         with:
