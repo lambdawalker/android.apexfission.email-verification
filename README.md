@@ -1,11 +1,11 @@
 # ApexFission Email Verification
 
-A reusable Android Compose email-verification widget and a standalone app for development and demos. The app runs offline by default and can also use an isolated deployment of the Go email-verification test host.
+A reusable Android Compose email-verification widget and a standalone app for development and demos. Its launcher catalog offers an offline flow and a separate connection to an isolated Go email-verification test host. **App settings** at the top opens Android's settings for this installed demo.
 
 | Component | Use |
 | --- | --- |
 | `:email-verification` | Embed the email and six-digit code flow in a Material 3 host. Connect the Go test host or provide a custom `VerificationGateway`. |
-| `:app` | Exercise the flow without AWS using the offline code `271828`, or enter a test-host URL and Cognito access token for live verification. |
+| `:app` | Choose **Open offline demo** and use code `271828`, or **Connect to test host** for live verification. Consumes the local library with a shared UI Common catalog. |
 | `testhost` | Import the Go HTTP client in integration tests and tooling that need to exercise the same test host. |
 
 Open this repo in Android Studio with JDK 17 or newer and Android SDK 37.0. Run the `app` configuration on an API 28+ device or emulator. From a terminal, use `./gradlew :app:installDebug`. Use `go test ./...` for the Go client.

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Demo de verificación de correo</string>
+    <string name="catalog_title">Verificación de correo</string>
+    <string name="catalog_description">Elige un flujo para probar. Los ejemplos sin conexión funcionan sin cuenta ni configuración del servidor.</string>
+    <string name="app_settings">Ajustes de la aplicación</string>
+    <string name="offline_description">Prueba el correo, la confirmación del código, los errores y los reintentos con datos locales. No se envían correos.</string>
+    <string name="live_description">Verifica un correo con tu servidor de prueba. Requiere un destinatario configurado y un token de acceso de prueba.</string>
+    <string name="open_offline">Abrir demo sin conexión</string>
+    <string name="back_to_menu">Volver al menú de demos</string>
+    <string name="live_session_help">Usa el servidor de prueba seleccionado. Al volver al menú, se descarta esta sesión.</string>
+    <string name="offline_mode">Demo sin conexión</string>
+    <string name="offline_help">No se envían correos. Usa el código de prueba %1$s.</string>
+    <string name="live_mode">Servidor de prueba</string>
+    <string name="configure_live">Conectar al servidor de prueba</string>
+    <string name="live_title">Conectar al servidor de prueba</string>
+    <string name="live_help">Usa la URL HTTPS del despliegue y un token de acceso de Cognito de su cuenta de prueba. Solo el destinatario configurado puede recibir correos.</string>
+    <string name="live_origin">URL del servidor de prueba</string>
+    <string name="live_token">Token de acceso de Cognito</string>
+    <string name="live_invalid">Introduce un origen HTTPS y un token con formato válido.</string>
+    <string name="live_continue">Continuar</string>
+    <string name="directory_loading">Cargando entornos de prueba…</string>
+    <string name="directory_unavailable">No se pudieron descubrir los entornos. Puedes introducir la URL del servidor manualmente.</string>
+    <string name="directory_empty">No hay entornos publicados. Puedes introducir la URL del servidor manualmente.</string>
+    <string name="directory_choose">Elegir un entorno</string>
+    <string name="directory_cognito">Grupo de Cognito %1$s · cliente de aplicación %2$s</string>
+    <string name="directory_refresh">Actualizar entornos</string>
+</resources>

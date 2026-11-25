@@ -1,17 +1,23 @@
 <resources>
     <string name="app_name">Email Verification Demo</string>
+    <string name="catalog_title">Email verification</string>
+    <string name="catalog_description">Choose a flow to test. Offline examples work without an account or backend setup.</string>
+    <string name="app_settings">App settings</string>
+    <string name="offline_description">Try email entry, code confirmation, errors and retry with a local fixture. No email is sent.</string>
+    <string name="live_description">Verify an email with your deployed test host. Requires a configured recipient and a tester access token.</string>
+    <string name="open_offline">Open offline demo</string>
+    <string name="back_to_menu">Back to demo menu</string>
+    <string name="live_session_help">Uses the selected test host. Returning to the menu discards this session.</string>
     <string name="offline_mode">Offline demo</string>
     <string name="offline_help">No email is sent. Use the demo code %1$s.</string>
     <string name="live_mode">Live test host</string>
     <string name="configure_live">Connect to test host</string>
-    <string name="use_offline">Switch to offline demo</string>
     <string name="live_title">Connect to the test host</string>
     <string name="live_help">Use the HTTPS URL of your deployment and a Cognito access token for its tester account. Only the configured test recipient can receive email.</string>
     <string name="live_origin">Test-host URL</string>
     <string name="live_token">Cognito access token</string>
     <string name="live_invalid">Enter an HTTPS origin and a valid token format.</string>
     <string name="live_continue">Continue</string>
-    <string name="live_cancel">Back to offline demo</string>
     <string name="directory_loading">Loading demo environments…</string>
     <string name="directory_unavailable">Environment discovery is unavailable. You can enter the test-host URL manually.</string>
     <string name="directory_empty">No published environments. You can enter the test-host URL manually.</string>

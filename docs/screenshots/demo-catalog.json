@@ -1,0 +1,24 @@
+{
+  "source": "6fb0746c78c11ee974a46466bbabf1568192273e",
+  "input_sha256": "b5d1f65ecde0a7b0c84fd831be8eb5a7fe93e3beb99d1de15e8c45d2b9748580",
+  "dirty": false,
+  "workflow_run": "https://github.com/lambdawalker/android.apexfission.email-verification/actions/runs/45668203121",
+  "capture": "Compose Preview Screenshot renderer; 393 x 800 dp, en-US, font scale 1.0",
+  "review": "Catalog light and dark previews visually reviewed for documentation. Regression baselines remain unaccepted.",
+  "images": {
+    "demo-catalog-light.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/catalog_Light_b135cb1d_0.png",
+      "theme": "light",
+      "sha256": "55c3a37acd93571f8546b32ab08ba4ee51def0f8e720571721946e297fa852af",
+      "width": 1032,
+      "height": 2100
+    },
+    "demo-catalog-dark.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/catalog_Dark_54f6fcf2_0.png",
+      "theme": "dark",
+      "sha256": "b7ce761f40412a4354481954289345ae77f58f62600ca7aecc279e57579653fb",
+      "width": 1032,
+      "height": 2100
+    }
+  }
+}
