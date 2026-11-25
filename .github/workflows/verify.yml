@@ -22,18 +22,10 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
-    env:
-      ORG_GRADLE_PROJECT_uiCommonSourceDir: ${{ github.workspace }}/.integration/ui-common
     steps:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
-      - name: Check out unpublished UI Common for integration validation
-        uses: actions/checkout@v7
-        with:
-          repository: lambdawalker/android.ui.common
-          ref: 66e66710e9e3337615a39ecbfb6269c30ebe5377
-          path: .integration/ui-common
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
@@ -65,16 +57,8 @@ jobs:
   demo-navigation:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      ORG_GRADLE_PROJECT_uiCommonSourceDir: ${{ github.workspace }}/.integration/ui-common
     steps:
       - uses: actions/checkout@v7
-      - name: Check out unpublished UI Common for integration validation
-        uses: actions/checkout@v7
-        with:
-          repository: lambdawalker/android.ui.common
-          ref: 66e66710e9e3337615a39ecbfb6269c30ebe5377
-          path: .integration/ui-common
       - uses: actions/setup-java@v5
         with:
           distribution: temurin

@@ -23,7 +23,7 @@ lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose
 lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version = "1.10.2" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "1.10.2" }
-ui-common = { module = "com.github.lambdawalker:android.ui.common", version = "ui-common~v0.1.0-jitpack" }
+ui-common = { module = "com.github.lambdawalker:android.ui.common", version = "ui-common~v0.1.1-jitpack" }
 screenshot-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot" }
 junit = { module = "junit:junit", version = "4.13.2" }
 compose-test = { module = "androidx.compose.ui:ui-test-junit4" }

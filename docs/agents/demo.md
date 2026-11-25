@@ -2,9 +2,8 @@
 
 ## Launcher and App settings
 
-The current Development branch needs the [UI Common source override](android.md#pending-ui-common-release)
-until its new card API is published. Add `-PuiCommonSourceDir=/absolute/path/to/android.ui.common`
-to the Gradle commands below for this staged integration.
+The demo resolves the published [UI Common 0.1.1 dependency](android.md#ui-common-dependency)
+through the repository's version catalog.
 
 Build with `./gradlew :app:assembleDebug`, install with `./gradlew :app:installDebug`, then open **Email Verification Demo**. The explicit launch command is `adb shell am start -n com.apexfission.android.emailverification.demo/.MainActivity`. The app requires API 28+ and the repository's Android toolchain. Its `:app` module consumes `project(":email-verification")`; the demo is not a published library artifact.
 

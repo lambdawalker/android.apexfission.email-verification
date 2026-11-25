@@ -35,12 +35,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "android.apexfission.email-verification"
 include(":email-verification", ":app")
-
-// Explicit contributor/CI integration only. Normal builds use the confirmed published pin.
-providers.gradleProperty("uiCommonSourceDir").orNull?.let { source ->
-    includeBuild(file(source)) {
-        dependencySubstitution {
-            substitute(module("com.github.lambdawalker:android.ui.common")).using(project(":ui-common"))
-        }
-    }
-}

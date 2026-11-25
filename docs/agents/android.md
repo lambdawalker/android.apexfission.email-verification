@@ -19,20 +19,20 @@ as the user types. Check status retains its existing callback. Resend, host onbo
 progress, product branding and session-isolation claims are not inferred by this component.
 The demo owns the reference-inspired blue/slate palette. The library always inherits its host.
 
-## Pending UI Common release
+## UI Common dependency
 
-This Development change needs the new `VerificationCardDetails` API, which is not present in
-the confirmed UI Common 0.1.0 JitPack artifact. The dependency pin remains unchanged until the
-owner publishes a release. Contributor and CI validation can explicitly substitute a reviewed
-source checkout; Gradle never clones a repository or falls back to an untracked local artifact:
+The shared card and code editor come from the confirmed **UI Common 0.1.1** JitPack release:
 
-```sh
-./gradlew :app:assembleDebug :app:connectedDebugAndroidTest -PuiCommonSourceDir=/absolute/path/to/android.ui.common
+```kotlin
+implementation("com.github.lambdawalker:android.ui.common:ui-common~v0.1.1-jitpack")
 ```
 
-CI checks out the full immutable source revision recorded in its workflow. Keep this consumer
-PR draft until a confirmed JitPack release replaces the old pin and validation passes without
-the source override.
+The version catalog pins this artifact for both the library and the demo. Normal Gradle builds
+and CI resolve it directly from JitPack. The temporary source checkout and composite substitution
+have been removed; no extra property or local UI Common repository is needed.
+
+[Upstream installation contract](https://github.com/lambdawalker/android.ui.common/blob/main/IMPORT.md).
+The release tag points to [the merged implementation](https://github.com/lambdawalker/android.ui.common/commit/84a2dc6586c63350d9d8867f6f7e6d3d9f0309e6).
 
 ## Controller ownership
 
