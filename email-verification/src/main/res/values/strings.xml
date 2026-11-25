@@ -16,7 +16,7 @@
     <string name="ev_verify">Complete email verification</string>
     <string name="ev_checking">Checking verification…</string>
     <string name="ev_check_status">Check status</string>
-    <string name="ev_change_email">Change email address</string>
+    <string name="ev_change_email">Change destination</string>
     <string name="ev_waiting">Code accepted</string>
     <string name="ev_waiting_help">The host is finishing verification. This can take a minute.</string>
     <string name="ev_checking_status">Checking host status…</string>

@@ -111,7 +111,7 @@ fun EmailVerificationWidget(
                     onValueChange = onCodeChange,
                     codeLabel = stringResource(R.string.ev_confirmation_code),
                     codeContentDescription = stringResource(R.string.ev_six_digit_code),
-                    pasteLabel = null,
+                    pasteLabel = stringResource(R.string.ev_paste),
                     instructions = stringResource(R.string.ev_check_email_help),
                     recipient = state.email,
                     enabled = !state.busy,
@@ -124,6 +124,11 @@ fun EmailVerificationWidget(
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer) {
                             Icon(painterResource(R.drawable.ev_mail), contentDescription = null,
                                 modifier = Modifier.padding(8.dp).size(20.dp))
+                        }
+                    },
+                    actions = {
+                        TextButton(onClick = onStartOver, enabled = !state.busy, shape = MaterialTheme.shapes.small) {
+                            Text(stringResource(R.string.ev_change_email))
                         }
                     },
                 )
@@ -145,11 +150,6 @@ fun EmailVerificationWidget(
                     colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
                     modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.ev_check_status))
-                }
-                TextButton(onClick = onStartOver, enabled = !state.busy, shape = MaterialTheme.shapes.small,
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
-                    modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.ev_change_email))
                 }
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically) {

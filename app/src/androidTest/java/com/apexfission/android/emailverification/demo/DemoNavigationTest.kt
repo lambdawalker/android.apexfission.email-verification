@@ -1,9 +1,12 @@
 package com.apexfission.android.emailverification.demo
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.app.Activity
 import android.app.Instrumentation.ActivityResult
 import android.net.Uri
 import android.provider.Settings
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -97,4 +100,19 @@ class DemoNavigationTest {
         confirm.performScrollTo().performClick()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_verified)).performScrollTo().assertIsDisplayed()
     }
+    @Test fun pasteAndChangeDestinationRemainAvailableBelowTheRecipient() {
+        compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().performClick()
+        val field = compose.onNodeWithContentDescription(compose.activity.getString(WidgetR.string.ev_six_digit_code))
+        compose.runOnUiThread {
+            compose.activity.getSystemService(ClipboardManager::class.java)
+                .setPrimaryClip(ClipData.newPlainText("Synthetic demo code", "27 18-28"))
+        }
+        field.assertTextEquals("")
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_paste)).performScrollTo().performClick()
+        field.assertTextEquals(DEMO_CODE)
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_change_email)).performScrollTo().performClick()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_send_code)).performScrollTo().assertIsDisplayed()
+    }
+
 }

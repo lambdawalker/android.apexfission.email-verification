@@ -12,7 +12,10 @@ The manual-code screen uses UI Common's detailed verification card: six rounded 
 and length legend, explanatory copy, and a recipient/status summary. Its primary action remains
 disabled until six digits are entered and requires an explicit tap. The card says **Awaiting
 confirmation** until the controller advances; entering a code does not imply that a link opened.
-Check status and Change email address retain their existing callbacks. Resend, host onboarding
+Paste code and Change destination are text buttons below the recipient card. Paste reads the
+clipboard only after a tap, and Change destination uses the existing start-over callback.
+Tapping a populated digit selects it for replacement; the border and fill follow the selection
+as the user types. Check status retains its existing callback. Resend, host onboarding
 progress, product branding and session-isolation claims are not inferred by this component.
 The demo owns the reference-inspired blue/slate palette. The library always inherits its host.
 
