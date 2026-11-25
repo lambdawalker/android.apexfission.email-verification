@@ -32,7 +32,7 @@ jobs:
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v5
       - name: Build, lint and test
-        run: ./gradlew :email-verification:testDebugUnitTest :app:testDebugUnitTest :email-verification:lintDebug :app:lintDebug :app:assembleDebug
+        run: ./gradlew :email-verification:testDebugUnitTest :app:testDebugUnitTest :email-verification:lintDebug :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest
       - name: Render screenshot candidates
         shell: bash
         run: python3 scripts/screenshots/review.py | tee -a "$GITHUB_STEP_SUMMARY"
@@ -53,6 +53,37 @@ jobs:
           name: demo-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+  demo-navigation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Verify catalog and Android settings round trip
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: ./gradlew :app:connectedDebugAndroidTest
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: demo-navigation-results
+          path: |
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
 
   docs:
     runs-on: ubuntu-latest

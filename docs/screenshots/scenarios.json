@@ -9,9 +9,14 @@
     "expired": 2
   },
   "app": {
+    "catalog": 4,
     "offlineFlow": 2,
+    "offlineError": 2,
+    "offlineSuccess": 2,
     "liveSettings": 3,
     "directorySettings": 2,
+    "directoryUnavailable": 2,
+    "directoryLoading": 2,
     "liveFlow": 2
   }
 }

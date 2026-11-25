@@ -6,64 +6,81 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.android.tools.screenshot.PreviewTest
 import com.apexfission.android.emailverification.EmailVerificationState
 import com.apexfission.android.emailverification.EmailVerificationWidget
+import com.apexfission.android.emailverification.VerificationMessage
 import com.apexfission.android.emailverification.VerificationStep
 
 @Preview(name = "Light", widthDp = 393, heightDp = 800, locale = "en-rUS", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(name = "Dark", widthDp = 393, heightDp = 800, locale = "en-rUS", uiMode = Configuration.UI_MODE_NIGHT_YES)
 private annotation class VerificationThemes
 
-private enum class Screen { Offline, Settings, Directory, Live }
-
 class DemoScreenshotTest {
     @PreviewTest
     @VerificationThemes
+    @Preview(name = "Narrow and large text", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB")
+    @Preview(name = "Spanish", widthDp = 393, heightDp = 800, locale = "es-rMX")
     @Composable
-    fun offlineFlow() = DemoFixture(Screen.Offline)
+    fun catalog() = DemoTheme { DemoCatalogScreen({}, {}, {}) }
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun offlineFlow() = FlowFixture(VerificationStep.Email)
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun offlineError() = FlowFixture(VerificationStep.Code, message = VerificationMessage.InvalidCode)
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun offlineSuccess() = FlowFixture(VerificationStep.Verified)
 
     @PreviewTest
     @VerificationThemes
     @Preview(name = "Narrow and large text", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB")
     @Composable
-    fun liveSettings() = DemoFixture(Screen.Settings)
+    fun liveSettings() = ConnectionFixture(DemoDirectory())
 
     @PreviewTest
     @VerificationThemes
     @Composable
-    fun directorySettings() = DemoFixture(Screen.Directory)
+    fun directorySettings() = ConnectionFixture(DemoDirectory(entries = listOf(
+        DemoEnvironment("dev", DEFAULT_ORIGIN, "us-east-2_demo", "demo-client"),
+        DemoEnvironment("qa", "https://qa.components.email-verification.apexfission.com", "us-east-2_qa", "qa-client"),
+    )))
 
     @PreviewTest
     @VerificationThemes
     @Composable
-    fun liveFlow() = DemoFixture(Screen.Live)
+    fun directoryUnavailable() = ConnectionFixture(DemoDirectory(unavailable = true))
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun directoryLoading() = ConnectionFixture(DemoDirectory(loading = true))
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun liveFlow() = FlowFixture(VerificationStep.Code, live = DEFAULT_ORIGIN)
 }
 
 @Composable
-private fun DemoFixture(screen: Screen) {
+private fun ConnectionFixture(directory: DemoDirectory) {
     DemoTheme {
-        DemoFrame {
-            when (screen) {
-                Screen.Settings -> LiveConnectionForm({ _, _ -> false }, {})
-                Screen.Directory -> LiveConnectionForm(
-                    onConnect = { _, _ -> false },
-                    onCancel = {},
-                    directory = DemoDirectory(entries = listOf(
-                        DemoEnvironment("dev", DEFAULT_ORIGIN, "us-east-2_demo", "demo-client"),
-                        DemoEnvironment(
-                            "qa", "https://qa.components.email-verification.apexfission.com",
-                            "us-east-2_qa", "qa-client",
-                        ),
-                    )),
-                )
-                Screen.Offline, Screen.Live -> {
-                    val live = screen == Screen.Live
-                    DemoMode(if (live) DEFAULT_ORIGIN else null, {})
-                    val state = EmailVerificationState(
-                        if (live) VerificationStep.Code else VerificationStep.Email,
-                        "tester@example.invalid",
-                    )
-                    EmailVerificationWidget(state, {}, {}, {}, {}, {}, {})
-                }
-            }
+        LiveConnectionScreen(onConnect = { _, _ -> false }, onCancel = {}, directory = directory, onRefreshDirectory = {})
+    }
+}
+
+@Composable
+private fun FlowFixture(step: VerificationStep, live: String? = null, message: VerificationMessage? = null) {
+    DemoTheme {
+        DemoFlowScreen(live, {}) {
+            EmailVerificationWidget(
+                EmailVerificationState(step, "tester@example.invalid", message = message),
+                {}, {}, {}, {}, {}, {},
+            )
         }
     }
 }

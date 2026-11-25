@@ -14,6 +14,7 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "0.1.0-dev"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures { compose = true }
@@ -27,6 +28,7 @@ android {
 
 dependencies {
     implementation(project(":email-verification"))
+    implementation(libs.ui.common)
     implementation(platform(libs.compose.bom))
     implementation(libs.activity.compose)
     implementation(libs.lifecycle.viewmodel)
@@ -34,7 +36,14 @@ dependencies {
     implementation(libs.compose.preview)
     debugImplementation(libs.compose.tooling)
     testImplementation(libs.junit)
+    testImplementation(libs.coroutines.test)
     testImplementation("org.json:json:20240303")
     screenshotTestImplementation(libs.compose.tooling)
     screenshotTestImplementation(libs.screenshot.api)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.test)
+    androidTestImplementation(libs.test.junit)
+    androidTestImplementation(libs.test.runner)
+    androidTestImplementation(libs.espresso.intents)
+    androidTestImplementation(libs.uiautomator)
 }
