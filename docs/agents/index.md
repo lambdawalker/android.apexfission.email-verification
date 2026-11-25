@@ -20,3 +20,5 @@ flowchart TD
 | [Run the demo](demo.md) | Offline steps, live service, tester credentials and troubleshooting. |
 | [Integrate from Go](go.md) | Package import, proof lifetime, test-host calls and result handling. |
 | [Review screenshots](screenshots.md) | Scenario coverage and baseline acceptance. |
+
+See the [demo catalog previews](demo.md#catalog-preview) for the launcher in light and dark themes.

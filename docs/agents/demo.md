@@ -14,6 +14,14 @@ The launcher uses UI Common's `CatalogScreen`, `ContentCard` and `SectionHeading
 
 The host owns navigation, environment discovery and in-memory demo sessions. Returning to the menu cancels pending work and replaces the live gateway, discarding its token, proof and recipient. Activity recreation retains the selected flow through its ViewModel. Process death returns to the catalog and requires a new live session; credentials are not saved. See [session ownership](../../app/src/main/java/com/apexfission/android/emailverification/demo/DemoModel.kt). App labels are available in English and Spanish; the library widget currently uses its existing English resources.
 
+## Catalog preview
+
+| Light | Dark |
+| --- | --- |
+| ![Light catalog with App settings above Offline and Live examples](../screenshots/demo-catalog-light.png) | ![Dark catalog with App settings above Offline and Live examples](../screenshots/demo-catalog-dark.png) |
+
+These reviewed Compose-rendered previews show the production catalog at 393 × 800 dp. [Capture provenance](../screenshots/demo-catalog.json) records the source commit and PNG hashes. They document the layout; the device tests separately verify navigation and the Android Settings round trip. Regression baseline acceptance remains part of the [screenshot review workflow](screenshots.md).
+
 ## Offline
 
 Choose **Open offline demo**, leave the sample address in place, tap **Send code**, then enter `271828`. Enter a different six-digit code first to see the error and retry state. Offline mode uses an in-memory fixture and sends no email. **Start over** starts another attempt; **Back to demo menu** and system Back leave the flow.
