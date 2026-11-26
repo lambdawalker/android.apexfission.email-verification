@@ -3,7 +3,7 @@ title: ApexFission Email Verification
 modules:
   email-verification: Email verification
 # Browser wizard preview from gradle.android-repo-setup PR #48.
-tooling_ref: 5e259e9cc2b2254ef20228c072fc36cde719bcce
+tooling_ref: a5e7323562b5561a20a881cd4102ec384a0252b2
 android_modules:
   app:
     path: :app
