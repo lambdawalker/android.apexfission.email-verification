@@ -33,7 +33,7 @@ implementation("com.github.lambdawalker:android.ui.common:ui-common~v0.1.1-jitpa
 
 The version catalog still pins this confirmed artifact for normal builds. The new action-row and
 error presentation are **Development source**, pending a release after 0.1.1. Integration CI checks
-out UI Common at `7811d99519b4a2354eb049024298ee71aeb12b15` and explicitly substitutes that checkout.
+out UI Common at `efbae54cf89865346a6ce474412d7d79ecf776db` and explicitly substitutes that checkout.
 The consumer PR stays draft until the new immutable artifact is published and verified; then the
 catalog will be updated and the temporary CI checkout removed.
 
