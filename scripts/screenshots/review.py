@@ -5,6 +5,7 @@ from collections import Counter
 import hashlib
 import html
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
@@ -32,6 +33,28 @@ def ui_common_dependency():
     return {"repository": "https://jitpack.io", **dependency}
 
 
+def ui_common_source():
+    source = os.environ.get("ORG_GRADLE_PROJECT_uiCommonSourceDir")
+    if not source:
+        return None
+    checkout = Path(source).resolve()
+    paths = subprocess.check_output(
+        ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--",
+         "ui-common/src/main", "ui-common/build.gradle.kts", "gradle", "settings.gradle.kts",
+         "build.gradle.kts", "gradle.properties"], cwd=checkout,
+    )
+    digest = hashlib.sha256()
+    for name in sorted(set(paths.rstrip(b"\0").split(b"\0"))):
+        path = checkout / name.decode()
+        digest.update(name + b"\0" + hashlib.sha256(path.read_bytes()).digest())
+    return {
+        "repository": "lambdawalker/android.ui.common",
+        "source": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=checkout, text=True).strip(),
+        "input_sha256": digest.hexdigest(),
+        "dirty": bool(subprocess.check_output(["git", "status", "--short"], cwd=checkout)),
+    }
+
+
 def capture_input():
     listing = subprocess.check_output(
         ["git", "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", *INPUTS],
@@ -42,6 +65,7 @@ def capture_input():
         path = ROOT / name.decode()
         data = path.read_bytes() if path.exists() else b"<deleted>"
         digest.update(name + b"\0" + hashlib.sha256(data).digest())
+    digest.update(json.dumps(ui_common_source(), sort_keys=True).encode())
     return digest.hexdigest()
 
 
@@ -147,6 +171,7 @@ def capture():
     images = inventory(candidates)
     current = {
         "ui_common_dependency": ui_common_dependency(),
+        "ui_common_source": ui_common_source(),
         "source": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "input_sha256": inputs,
         "dirty": bool(subprocess.check_output(["git", "status", "--short", "--", *INPUTS], cwd=ROOT)),

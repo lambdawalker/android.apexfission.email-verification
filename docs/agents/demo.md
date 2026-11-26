@@ -2,8 +2,8 @@
 
 ## Launcher and App settings
 
-The demo resolves the published [UI Common 0.1.1 dependency](android.md#ui-common-dependency)
-through the repository's version catalog.
+Normal builds resolve the published UI Common 0.1.1 dependency; the new visual treatment uses
+the [explicit source integration](android.md#ui-common-dependency) until the next release.
 
 Build with `./gradlew :app:assembleDebug`, install with `./gradlew :app:installDebug`, then open **Email Verification Demo**. The explicit launch command is `adb shell am start -n com.apexfission.android.emailverification.demo/.MainActivity`. The app requires API 28+ and the repository's Android toolchain. Its `:app` module consumes `project(":email-verification")`; the demo is not a published library artifact.
 

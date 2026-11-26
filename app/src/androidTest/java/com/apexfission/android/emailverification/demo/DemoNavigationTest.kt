@@ -6,6 +6,7 @@ import android.app.Activity
 import android.app.Instrumentation.ActivityResult
 import android.net.Uri
 import android.provider.Settings
+import androidx.compose.ui.test.assertDoesNotExist
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -94,7 +95,10 @@ class DemoNavigationTest {
         field.performScrollTo().performTextInput("000000")
         confirm.performScrollTo().assertIsEnabled().performClick()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).performScrollTo().assertIsDisplayed()
         field.performScrollTo().performTextReplacement(DEMO_CODE)
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).assertDoesNotExist()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).assertDoesNotExist()
         // Entering all digits never submits by itself.
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_awaiting_confirmation)).performScrollTo().assertIsDisplayed()
         confirm.performScrollTo().performClick()
@@ -109,6 +113,12 @@ class DemoNavigationTest {
                 .setPrimaryClip(ClipData.newPlainText("Synthetic demo code", "27 18-28"))
         }
         field.assertTextEquals("")
+        val paste = compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_paste)).performScrollTo()
+        val change = compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_change_email))
+        val pasteBounds = paste.fetchSemanticsNode().boundsInRoot
+        val changeBounds = change.fetchSemanticsNode().boundsInRoot
+        assertTrue("Actions share a row", kotlin.math.abs(pasteBounds.center.y - changeBounds.center.y) < 1f)
+        assertTrue("Paste is left of Change destination", pasteBounds.right < changeBounds.left)
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_paste)).performScrollTo().performClick()
         field.assertTextEquals(DEMO_CODE)
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_change_email)).performScrollTo().performClick()

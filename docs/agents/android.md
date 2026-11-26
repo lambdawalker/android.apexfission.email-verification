@@ -12,11 +12,15 @@ The manual-code screen uses UI Common's detailed verification card: six rounded 
 and length legend, explanatory copy, and a recipient/status summary. Its primary action remains
 disabled until six digits are entered and requires an explicit tap. The card says **Awaiting
 confirmation** until the controller advances; entering a code does not imply that a link opened.
-Paste code and Change destination are text buttons below the recipient card. Paste reads the
+Paste code and Change destination share a row below the recipient card, aligned to opposite sides. Paste reads the
 clipboard only after a tap, and Change destination uses the existing start-over callback.
 Tapping a populated digit selects it for replacement; the border and fill follow the selection
 as the user types. Check status retains its existing callback. Resend, host onboarding
 progress, product branding and session-isolation claims are not inferred by this component.
+An invalid code changes the length legend to **Incorrect code**. Errors tint and outline the code
+cells and replace explanatory copy with an outlined notice above the recipient. Editing clears the
+controller's error and keeps focus moving through the digits. No remaining-attempt count or sent
+timestamp is displayed because the gateway does not provide those values.
 The demo owns the reference-inspired blue/slate palette. The library always inherits its host.
 
 ## UI Common dependency
@@ -27,9 +31,16 @@ The shared card and code editor come from the confirmed **UI Common 0.1.1** JitP
 implementation("com.github.lambdawalker:android.ui.common:ui-common~v0.1.1-jitpack")
 ```
 
-The version catalog pins this artifact for both the library and the demo. Normal Gradle builds
-and CI resolve it directly from JitPack. The temporary source checkout and composite substitution
-have been removed; no extra property or local UI Common repository is needed.
+The version catalog still pins this confirmed artifact for normal builds. The new action-row and
+error presentation are **Development source**, pending a release after 0.1.1. Integration CI checks
+out UI Common at `7811d99519b4a2354eb049024298ee71aeb12b15` and explicitly substitutes that checkout.
+The consumer PR stays draft until the new immutable artifact is published and verified; then the
+catalog will be updated and the temporary CI checkout removed.
+
+For local integration, check out that UI Common revision and set
+`ORG_GRADLE_PROJECT_uiCommonSourceDir=/absolute/path/to/android.ui.common` before running Gradle
+or the screenshot script. Gradle never clones automatically and does not fall back to mavenLocal.
+The capture manifest records both the catalog dependency and the source override, when used.
 
 [Upstream installation contract](https://github.com/lambdawalker/android.ui.common/blob/main/IMPORT.md).
 The release tag points to [the merged implementation](https://github.com/lambdawalker/android.ui.common/commit/84a2dc6586c63350d9d8867f6f7e6d3d9f0309e6).

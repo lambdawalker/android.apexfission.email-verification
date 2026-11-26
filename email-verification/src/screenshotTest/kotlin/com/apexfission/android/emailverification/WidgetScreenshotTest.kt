@@ -55,8 +55,14 @@ class WidgetScreenshotTest {
     @PreviewTest
     @VerificationThemes
     @Preview(name = "Narrow and large text", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB")
+    @Preview(name = "Narrow and large text dark", widthDp = 320, heightDp = 800, fontScale = 1.5f, locale = "en-rGB", uiMode = Configuration.UI_MODE_NIGHT_YES)
     @Composable
     fun codeError() = WidgetFixture(EmailVerificationState(VerificationStep.Code, email, "000000", message = VerificationMessage.InvalidCode))
+
+    @PreviewTest
+    @VerificationThemes
+    @Composable
+    fun codeUnavailable() = WidgetFixture(EmailVerificationState(VerificationStep.Code, email, "123456", message = VerificationMessage.Unavailable))
 
     @PreviewTest
     @VerificationThemes
