@@ -33,10 +33,19 @@ These reviewed Compose-rendered previews show the production catalog at 393 × 8
 
 These synthetic previews show a complete local example code before submission. The recipient stays
 **Awaiting confirmation** until the controller advances. The blue/slate palette belongs to the demo;
-the reusable widget inherits its host theme. **Paste code** and **Change destination** sit below
-the recipient card. Tapping a digit selects it, and the highlight follows typing. [Capture provenance](../screenshots/manual-code.json).
+the reusable widget inherits its host theme. **Paste code** and **Change destination** share a row below
+the recipient card, aligned to opposite sides. Tapping a digit selects it, and the highlight follows typing. [Capture provenance](../screenshots/manual-code.json).
 
 Choose **Open offline demo**, leave the sample address in place, tap **Send code**, then enter `271828`. Enter a different six-digit code first to see the error and retry state. Offline mode uses an in-memory fixture and sends no email. **Start over** starts another attempt; **Back to demo menu** and system Back leave the flow.
+
+| Invalid code, light | Invalid code, dark |
+| --- | --- |
+| ![Light invalid-code notice and aligned actions](../screenshots/code-error-light.png) | ![Dark invalid-code notice and aligned actions](../screenshots/code-error-dark.png) |
+
+The error legend, tinted cells and outlined notice use the host's error colors. The notice appears
+before the recipient card. Editing clears the error through the controller; the focused digit keeps
+its stronger primary outline. [Capture provenance](../screenshots/manual-code.json) identifies the
+source integration used for these documentation illustrations. They are not accepted regression baselines.
 
 ## Live
 

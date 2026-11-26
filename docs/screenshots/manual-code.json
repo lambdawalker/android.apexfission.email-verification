@@ -1,28 +1,47 @@
 {
-  "source": "5515c2453e61d92a23d4e0f6015bb93be1496584",
-  "input_sha256": "109b0116b4e6b564b4e7e5f94ce98f117642afb4af14245dc3268a4493a542ca",
-  "dirty": false,
+  "ui_common_dependency": {
+    "repository": "https://jitpack.io",
+    "module": "com.github.lambdawalker:android.ui.common",
+    "version": "ui-common~v0.1.1-jitpack"
+  },
   "ui_common_source": {
     "repository": "lambdawalker/android.ui.common",
-    "source": "66e66710e9e3337615a39ecbfb6269c30ebe5377",
-    "input_sha256": "609a69b990d267c9f90613128424502614bacf216b4bae360eaf6a2e6136e69e",
+    "source": "efbae54cf89865346a6ce474412d7d79ecf776db",
+    "input_sha256": "4d79fab60646bc008c35859c5954d7930bc1530ab16200775d62998ef3def264",
     "dirty": false
   },
-  "workflow_run": "https://github.com/lambdawalker/android.apexfission.email-verification/actions/runs/45695118775",
+  "source": "c496bc19ef3f8456eaa6592e7db4661ec3f89a79",
+  "input_sha256": "a63e0e7a8d395c247702f687a402c91305e664cb76e2bf9829be9d9558d7b596",
+  "dirty": false,
+  "workflow_run": "https://github.com/lambdawalker/android.apexfission.email-verification/actions/runs/45728455814",
   "capture": "Compose Preview Screenshot renderer; 393 x 800 dp, en-US, font scale 1.0",
-  "review": "Light/dark documentation previews visually reviewed for restored text actions below the recipient, compact spacing and primary action visibility. Regression baselines remain unaccepted.",
+  "review": "Reviewed light/dark demo illustrations for the one-row actions and error cell borders, legend and outlined notice above the recipient. Narrow/large-text and focus variants reviewed separately in the full candidate suite. Documentation illustrations only; regression baselines remain unaccepted.",
   "images": {
     "manual-code-light.png": {
       "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/manualCodeReady_Light_b135cb1d_0.png",
       "theme": "light",
-      "sha256": "c8b9d9c6abc73ca2b8c303a1244be0e8474453839a8a0c24a95824c4b440e3be",
+      "sha256": "0191d28d3e98b3cf7dda0febaf1e2e7b2471c8897e154cd39022763cc0e1491a",
       "width": 1032,
       "height": 2100
     },
     "manual-code-dark.png": {
       "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/manualCodeReady_Dark_54f6fcf2_0.png",
       "theme": "dark",
-      "sha256": "051bbf13859c6aa0871296ce3924b64f6dbd7bf6fd12d7a33888b276da0bba56",
+      "sha256": "08f51cd4618fe4f233312216a0d3d8a9cf95e9093a47f3ed59542029fc02edd6",
+      "width": 1032,
+      "height": 2100
+    },
+    "code-error-light.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/offlineError_Light_b135cb1d_0.png",
+      "theme": "light",
+      "sha256": "ea543f68e802533a3d0ff73e3943a2bbac96cb66baa30782b3d9781eb24ed05b",
+      "width": 1032,
+      "height": 2100
+    },
+    "code-error-dark.png": {
+      "scenario": "app/com/apexfission/android/emailverification/demo/DemoScreenshotTest/offlineError_Dark_54f6fcf2_0.png",
+      "theme": "dark",
+      "sha256": "35d04ff53fbcc12ffb91706bedb95d44101611f2c07a06ed07813a8533d01ea7",
       "width": 1032,
       "height": 2100
     }
