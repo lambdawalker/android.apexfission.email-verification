@@ -6,7 +6,6 @@ import android.app.Activity
 import android.app.Instrumentation.ActivityResult
 import android.net.Uri
 import android.provider.Settings
-import androidx.compose.ui.test.assertDoesNotExist
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
