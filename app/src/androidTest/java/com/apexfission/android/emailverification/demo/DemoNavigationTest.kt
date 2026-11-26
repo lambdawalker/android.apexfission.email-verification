@@ -20,6 +20,7 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
@@ -92,6 +93,7 @@ class DemoNavigationTest {
         confirm.performScrollTo().assertIsNotEnabled()
         val field = compose.onNodeWithContentDescription(compose.activity.getString(WidgetR.string.ev_six_digit_code))
         field.performScrollTo().performTextInput("000000")
+        closeSoftKeyboard()
         confirm.performScrollTo().assertIsEnabled().performClick()
         // Controller state is collected through lifecycle-aware Flow; wait for that response,
         // not just the click/recomposition to be idle.
@@ -102,6 +104,7 @@ class DemoNavigationTest {
         compose.onNodeWithText(invalidCode).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).performScrollTo().assertIsDisplayed()
         field.performScrollTo().performTextReplacement(DEMO_CODE)
+        closeSoftKeyboard()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).assertDoesNotExist()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).assertDoesNotExist()
         // Entering all digits never submits by itself.
