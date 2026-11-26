@@ -93,7 +93,13 @@ class DemoNavigationTest {
         val field = compose.onNodeWithContentDescription(compose.activity.getString(WidgetR.string.ev_six_digit_code))
         field.performScrollTo().performTextInput("000000")
         confirm.performScrollTo().assertIsEnabled().performClick()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).performScrollTo().assertIsDisplayed()
+        // Controller state is collected through lifecycle-aware Flow; wait for that response,
+        // not just the click/recomposition to be idle.
+        val invalidCode = compose.activity.getString(WidgetR.string.ev_invalid_code)
+        compose.waitUntil(timeoutMillis = 5_000) {
+            compose.onAllNodesWithText(invalidCode).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithText(invalidCode).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).performScrollTo().assertIsDisplayed()
         field.performScrollTo().performTextReplacement(DEMO_CODE)
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).assertDoesNotExist()
@@ -101,7 +107,11 @@ class DemoNavigationTest {
         // Entering all digits never submits by itself.
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_awaiting_confirmation)).performScrollTo().assertIsDisplayed()
         confirm.performScrollTo().performClick()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_verified)).performScrollTo().assertIsDisplayed()
+        val verified = compose.activity.getString(WidgetR.string.ev_verified)
+        compose.waitUntil(timeoutMillis = 5_000) {
+            compose.onAllNodesWithText(verified).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithText(verified).performScrollTo().assertIsDisplayed()
     }
     @Test fun pasteAndChangeDestinationRemainAvailableBelowTheRecipient() {
         compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
