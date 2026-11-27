@@ -2,7 +2,7 @@ repository: lambdawalker/android.apexfission.email-verification
 title: ApexFission Email Verification
 modules:
   email-verification: Email verification
-tooling_ref: 67415c7263cf7ec3573e319a377588757d30ac3f
+tooling_ref: 78de4ea5b51ccded72589b37723f68bdda19b59b
 workflows:
   title: ApexFission Email Verification
 android_modules:
