@@ -103,7 +103,8 @@ fun EmailVerificationWidget(
                 Spacer(Modifier.height(12.dp))
                 CodeVerificationCard(
                     details = VerificationCardDetails(
-                        codeLengthLabel = stringResource(R.string.ev_code_length),
+                        codeLengthLabel = stringResource(if (state.message == VerificationMessage.InvalidCode)
+                            R.string.ev_incorrect_code else R.string.ev_code_length),
                         explanation = stringResource(R.string.ev_code_explanation),
                         recipientStatus = stringResource(R.string.ev_awaiting_confirmation),
                     ),

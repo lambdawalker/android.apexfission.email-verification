@@ -20,6 +20,7 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
@@ -92,13 +93,28 @@ class DemoNavigationTest {
         confirm.performScrollTo().assertIsNotEnabled()
         val field = compose.onNodeWithContentDescription(compose.activity.getString(WidgetR.string.ev_six_digit_code))
         field.performScrollTo().performTextInput("000000")
+        closeSoftKeyboard()
         confirm.performScrollTo().assertIsEnabled().performClick()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).performScrollTo().assertIsDisplayed()
+        // Controller state is collected through lifecycle-aware Flow; wait for that response,
+        // not just the click/recomposition to be idle.
+        val invalidCode = compose.activity.getString(WidgetR.string.ev_invalid_code)
+        compose.waitUntil(timeoutMillis = 5_000) {
+            compose.onAllNodesWithText(invalidCode).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithText(invalidCode).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).performScrollTo().assertIsDisplayed()
         field.performScrollTo().performTextReplacement(DEMO_CODE)
+        closeSoftKeyboard()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_incorrect_code)).assertDoesNotExist()
+        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_invalid_code)).assertDoesNotExist()
         // Entering all digits never submits by itself.
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_awaiting_confirmation)).performScrollTo().assertIsDisplayed()
         confirm.performScrollTo().performClick()
-        compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_verified)).performScrollTo().assertIsDisplayed()
+        val verified = compose.activity.getString(WidgetR.string.ev_verified)
+        compose.waitUntil(timeoutMillis = 5_000) {
+            compose.onAllNodesWithText(verified).fetchSemanticsNodes().isNotEmpty()
+        }
+        compose.onNodeWithText(verified).performScrollTo().assertIsDisplayed()
     }
     @Test fun pasteAndChangeDestinationRemainAvailableBelowTheRecipient() {
         compose.onNodeWithText(compose.activity.getString(R.string.open_offline)).performScrollTo().performClick()
@@ -109,6 +125,12 @@ class DemoNavigationTest {
                 .setPrimaryClip(ClipData.newPlainText("Synthetic demo code", "27 18-28"))
         }
         field.assertTextEquals("")
+        val paste = compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_paste)).performScrollTo()
+        val change = compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_change_email))
+        val pasteBounds = paste.fetchSemanticsNode().boundsInRoot
+        val changeBounds = change.fetchSemanticsNode().boundsInRoot
+        assertTrue("Actions share a row", kotlin.math.abs(pasteBounds.center.y - changeBounds.center.y) < 1f)
+        assertTrue("Paste is left of Change destination", pasteBounds.right < changeBounds.left)
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_paste)).performScrollTo().performClick()
         field.assertTextEquals(DEMO_CODE)
         compose.onNodeWithText(compose.activity.getString(WidgetR.string.ev_change_email)).performScrollTo().performClick()

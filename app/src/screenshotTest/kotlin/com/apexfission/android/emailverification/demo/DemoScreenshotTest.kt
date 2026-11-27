@@ -41,7 +41,7 @@ class DemoScreenshotTest {
     @PreviewTest
     @VerificationThemes
     @Composable
-    fun offlineError() = FlowFixture(VerificationStep.Code, message = VerificationMessage.InvalidCode)
+    fun offlineError() = FlowFixture(VerificationStep.Code, code = "000000", message = VerificationMessage.InvalidCode)
 
     @PreviewTest
     @VerificationThemes

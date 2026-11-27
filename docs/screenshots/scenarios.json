@@ -3,11 +3,12 @@
     "emailEntry": 3,
     "sending": 2,
     "codeEntry": 4,
-    "codeError": 3,
+    "codeError": 4,
     "waiting": 2,
     "success": 2,
     "expired": 2,
-    "codeBusy": 2
+    "codeBusy": 2,
+    "codeUnavailable": 2
   },
   "app": {
     "catalog": 4,

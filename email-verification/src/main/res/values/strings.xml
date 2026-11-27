@@ -25,7 +25,8 @@
     <string name="ev_start_over">Start over</string>
     <string name="ev_email_required">Enter your email address.</string>
     <string name="ev_invalid_email">This email address couldn’t be verified. Check the address and try again.</string>
-    <string name="ev_invalid_code">That code didn’t work. Check the latest verification email.</string>
+    <string name="ev_incorrect_code">Incorrect code</string>
+    <string name="ev_invalid_code">That code didn’t match. Check the six-digit code in your email and try again.</string>
     <string name="ev_unauthorized">Your session is no longer authorized. Sign in again and retry.</string>
     <string name="ev_expired">The code expired. Start over for a new code.</string>
     <string name="ev_attempts_exhausted">Too many incorrect attempts. Start over for a new code.</string>
